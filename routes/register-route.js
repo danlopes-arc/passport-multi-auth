@@ -1,6 +1,9 @@
 const passport = require('passport')
 const router = require('express').Router()
 
+const { requireNotAuth } = require('../middleware/auth-check')
+
+router.use(requireNotAuth)
 
 router.route('/')
 .get((req, res) => {

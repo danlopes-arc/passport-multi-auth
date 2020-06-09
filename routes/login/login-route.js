@@ -1,9 +1,11 @@
 const passport = require('passport')
 const router = require('express').Router()
 
-const { requireNotAuth } = require('../middleware/auth-check')
+const { requireNotAuth } = require('../../middleware/auth-check')
 
 router.use(requireNotAuth)
+
+router.use('/google', require('./google-router'))
 
 router.route('/')
 .get((req, res) => {
@@ -18,14 +20,5 @@ router.route('/')
   console.log('[passport local] old user', req.user)
   return res.redirect('/')
 })
-
-// router.get('/google', passport.authenticate('google', {
-//   scope: ['profile']
-// }))
-
-// router.get('/google/redirect', passport.authenticate('google'),
-// (req, res) => {
-//   return res.redirect('/')
-// })
 
 module.exports = router

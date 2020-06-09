@@ -26,5 +26,4 @@ router.route('/')
   return res.redirect('/login')
 })
 
-
 module.exports = router

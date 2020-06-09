@@ -19,8 +19,15 @@ const users = [
     email: 'x@x.x'
   }
 ]
+const createUserId = () => {
+  const id = Math.floor(Math.random() * 1000000)
+  if (users.find(u => u.id === id) == null) {
+    return id
+  }
+  return createId()
+}
 
-passportConfig(users)
+passportConfig(users, createUserId)
 
 const app = express()
 
@@ -46,13 +53,7 @@ app.use((req, res, next) => {
 })
 // add createId to req
 app.use((req, res, next) => {
-  req.createUserId = () => {
-    const id = Math.floor(Math.random() * 1000000)
-    if (users.find(u => u.id === id) == null) {
-      return id
-    }
-    return createId()
-  }
+  req.createUserId = createUserId
   return next()
 })
 // populate res.locals
@@ -62,7 +63,7 @@ app.use((req, res, next) => {
   return next()
 })
 
-app.use('/login', require('./routes/login-route'))
+app.use('/login', require('./routes/login/login-route'))
 app.use('/register', require('./routes/register-route'))
 
 app.get('/', (req, res) => {

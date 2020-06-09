@@ -1,0 +1,15 @@
+{{#if flash.error}}
+  <ul class="list-group mb-2" role="alert">
+    {{#each flash.error}}
+      <li class="list-group-item list-group-item-danger">{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}
+
+{{#if flash.success}}
+  <ul class="list-group mb-2" role="alert">
+    {{#each flash.success}}
+      <li class="list-group-item list-group-item-success">{{this}}</li>
+    {{/each}}
+  </ul>
+{{/if}}

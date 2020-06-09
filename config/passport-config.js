@@ -19,7 +19,10 @@ const config = (users = defUsers) => {
   },
   (email, password, done) => {
     const user = users.find(u => u.email === email && u.password === password)
-    return done(null, user)
+    if (user == null) {
+      return done(null, false, {message: 'username or password incorrect'})
+    }
+    return done(null, user, {message: 'you are in'})
   }))
 
 

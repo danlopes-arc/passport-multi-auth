@@ -2,11 +2,13 @@ require('dotenv').config()
 const express = require('express')
 const passport = require('passport')
 const session = require('express-session')
-const passportConfig = require('./config/passport-config')
+const flash = require('express-flash-messages')
 
 const handlebars = require('handlebars')
 const expressHandlebars = require('express-handlebars')
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access')
+
+const passportConfig = require('./config/passport-config')
 
 const users = [
   {
@@ -36,11 +38,7 @@ app.use(session({
 }))
 app.use(passport.initialize())
 app.use(passport.session())
-// add user to res.locals
-app.use((req, res, next) => {
-  res.locals.user = req.user
-  return next()
-})
+app.use(flash())
 // add users to req
 app.use((req, res, next) => {
   req.users = users
@@ -55,6 +53,12 @@ app.use((req, res, next) => {
     }
     return createId()
   }
+  return next()
+})
+// populate res.locals
+app.use((req, res, next) => {
+  res.locals.user = req.user
+  res.locals.flash = res.locals.getMessages()
   return next()
 })
 

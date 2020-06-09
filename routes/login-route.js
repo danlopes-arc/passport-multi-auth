@@ -6,7 +6,11 @@ router.route('/')
 .get((req, res) => {
   return res.render('login')
 })
-.post(passport.authenticate('local', { failureRedirect: '/login' }),
+.post(passport.authenticate('local', {
+  failureRedirect: '/login',
+  failureFlash: true,
+  successFlash:true
+}),
 (req, res) => {
   console.log('[passport local] old user', req.user)
   return res.redirect('/')

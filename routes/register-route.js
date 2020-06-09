@@ -8,16 +8,18 @@ router.route('/')
 })
 .post((req, res) => {
   const user = req.body
-  console.log(user)
   if (!user || user.name === '' || user.email === ''|| user.password === '' ) {
+    req.flash('error', 'you must fill all the fields')
     return res.redirect('/register')
   }
   if (req.users.find(u => u.email === user.email)) {
+    req.flash('error', 'email is already registered')
     return res.redirect('/register')
   }
   user.id = req.createUserId()
   req.users.push({...user})
   console.log('[passport local] new user', user)
+  req.flash('success', 'successfully registered, you can login now')
   return res.redirect('/login')
 })
 

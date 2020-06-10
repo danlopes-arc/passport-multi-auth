@@ -6,6 +6,7 @@ const { requireNotAuth } = require('../../middleware/auth-check')
 router.use(requireNotAuth)
 
 router.use('/google', require('./google-router'))
+router.use('/facebook', require('./facebook-router'))
 
 router.route('/')
 .get((req, res) => {
@@ -17,7 +18,6 @@ router.route('/')
   successFlash:true
 }),
 (req, res) => {
-  console.log('[passport local] old user', req.user)
   return res.redirect('/')
 })
 

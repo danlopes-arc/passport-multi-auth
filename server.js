@@ -14,6 +14,7 @@ const users = [
   {
     id: 0,
     googleId: 'x',
+    facebookId: 'x',
     name: 'x',
     password: 'x',
     email: 'x@x.x'

@@ -2,11 +2,13 @@ const passport = require('passport')
 
 const LocalStrategy = require('passport-local').Strategy
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
+const FacebookStrategy = require('passport-facebook').Strategy
 
 const defUsers = [
   {
     id: 0,
     googleId: 'x',
+    facebookId: 'x',
     name: 'x',
     password: 'x',
     email: 'x@x.x'
@@ -32,16 +34,31 @@ const config = (users = defUsers, createUserId) => {
   },
   (accessToken, refreshToken, profile, done) => {
     let user = users.find(u => u.googleId === profile.id)
-    if (user != null) {
-      console.log('old user', user)
-    } else {
+    if (user == null) {
       user = {
         id: createUserId(),
         googleId: profile.id,
         name: profile.name.givenName
       }
       users.push(user)
-      console.log('new user:', user)
+    }
+    return done(null, user)
+  }))
+
+  passport.use(new FacebookStrategy({
+    clientID: process.env.FACEBOOK_APP_ID,
+    clientSecret: process.env.FACEBOOK_APP_SECRET,
+    callbackURL: '/login/facebook/redirect'
+  },
+  (accessToken, refreshToken, profile, done) => {
+    let user = users.find(u => u.googleId === profile.id)
+    if (user == null) {
+      user = {
+        id: createUserId(),
+        facebookId: profile.id,
+        name: profile.displayName
+      }
+      users.push(user)
     }
     return done(null, user)
   }))

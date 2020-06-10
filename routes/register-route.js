@@ -21,7 +21,6 @@ router.route('/')
   }
   user.id = req.createUserId()
   req.users.push({...user})
-  console.log('[passport local] new user', user)
   req.flash('success', 'successfully registered, you can login now')
   return res.redirect('/login')
 })

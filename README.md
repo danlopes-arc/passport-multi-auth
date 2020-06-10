@@ -4,7 +4,7 @@ Express webserver with passport.js to handle authentication.
 
 Used Handlebars to render the views
 
-## Passport strategies supported
+## Passport supported strategies
 
 - local
 - google

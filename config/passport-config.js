@@ -38,7 +38,7 @@ const config = (users = defUsers, createUserId) => {
       user = {
         id: createUserId(),
         googleId: profile.id,
-        name: profile.name.givenName
+        name: profile.displayName
       }
       users.push(user)
     }

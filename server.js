@@ -66,6 +66,7 @@ app.use((req, res, next) => {
 
 app.use('/login', require('./routes/login/login-route'))
 app.use('/register', require('./routes/register-route'))
+app.use('/profile', require('./routes/profile-route'))
 
 app.get('/', (req, res) => {
   return res.render('index')
